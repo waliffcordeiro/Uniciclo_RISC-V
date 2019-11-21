@@ -11,16 +11,18 @@ architecture arch_ULA_test of ULA_test is
 		port (
 			A, B : in std_logic_vector(DATA_WIDTH -1 downto 0);
 			op : in std_logic_vector(3 downto 0);
-			result : out std_logic_vector(DATA_WIDTH -1 downto 0)
+			result : out std_logic_vector(DATA_WIDTH -1 downto 0);
+			zero : out std_logic
 		);
 	end component;
 
 	signal A, B, result : std_logic_vector(DATA_WIDTH - 1 downto 0);
 	signal op : std_logic_vector(3 downto 0);
+	signal zero : std_logic;
 	
 begin
 
-	test: ULA port map (A, B, op, result);
+	test: ULA port map (A, B, op, result, zero);
 	
 	process begin
 		-- Add
