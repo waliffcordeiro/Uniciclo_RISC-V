@@ -6,13 +6,14 @@ entity ULA is
 	port (
 		A, B : in std_logic_vector(DATA_WIDTH -1 downto 0);
 		op : in std_logic_vector(3 downto 0);
-		result : out std_logic_vector(DATA_WIDTH -1 downto 0)
+		result : out std_logic_vector(DATA_WIDTH -1 downto 0);
+		zero : out std_logic
 	);
 end entity ULA;
 
 architecture ULA of ULA is
 
--- Vetor com DATA_WITDH - 1 zeros, com objetivo de deixar o result genérico
+-- Vetor com DATA_WITDH - 1 zeros, com objetivo de deixar o result generico
 signal data_width_zero : std_logic_vector(DATA_WIDTH-2 downto 0);
 
 begin
@@ -21,7 +22,7 @@ begin
   data_width_zero <= (others => '0');
 	
 	-- Calcula os resultados dependendo do opcode
-	result 	<=		std_logic_vector(signed(A) + signed(B)) when op = "0000" else --ADD
+	result 	<=	std_logic_vector(signed(A) + signed(B)) when op = "0000" else --ADD
 				std_logic_vector(signed(A) - signed(B)) when op = "0001" else -- SUB
 				std_logic_vector(unsigned(A) sll to_integer(unsigned(B))) when op = "0010" else -- SLL 
 				data_width_zero & '1' when op = "0011" and (signed(A) < signed(B)) else  -- SLT
@@ -36,8 +37,8 @@ begin
 				data_width_zero & '1' when op = "1100" and (signed(A) >= signed(B)) else --SGE
 				data_width_zero & '1' when op = "1101" and (unsigned(A) >= unsigned(B)) else -- SGEU
 
-				data_width_zero & '0'; -- Caso default dos opcodes, e caso não satisfeito à condição de set
+				data_width_zero & '0'; -- Caso default dos opcodes, e caso nï¿½o satisfeito ï¿½ condiï¿½ï¿½o de set
 
-
+	zero <= '1' when signed(result) = 0 else '0';
 
 end ULA;
