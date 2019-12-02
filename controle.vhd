@@ -6,7 +6,7 @@ entity controle is
 	port(
 		op					:	in std_logic_vector(6 downto 0);
 		
-		op_ula			:	out std_logic_vector(1 downto 0); -- 4 bits da OpUla
+		op_ula			:	out std_logic_vector(1 downto 0); -- 2 bits da OpUla
 		
 		branch,			--	Ligado caso haja uma instrucao de branch
 		le_mem,			-- Permite a leitura da memoria
