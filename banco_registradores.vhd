@@ -13,19 +13,37 @@ end entity banco_registradores;
 
 architecture arch_banco_registradores of banco_registradores is
 
+	type dmem_array is array(0 to ((2**N)-1)) of STD_LOGIC_VECTOR(M-1 downto 0);
+	signal br: dmem_array := (
+										x"abababab",
+										x"efefefef",
+										x"02146545",
+										x"85781546",
+										x"69782314",
+										x"25459789",
+										x"245a65c5",
+										x"ac5b4b5b",
+										x"ebebebeb",
+										x"cacacaca",
+										x"ecececec",
+										x"facfcafc",
+										x"ecaecaaa",
+										x"dadadeac",
+										others => (others => '1')
+									 );
 begin
 	
-	rout1 <= d_mem(to_integer(unsigned(rs1))) when (to_integer(unsigned(rs1))<((2**N)-1) and to_integer(unsigned(rs1))> 0 and memwrite='0') else (others => '0');
-	rout2 <= d_mem(to_integer(unsigned(rs2))) when (to_integer(unsigned(rs2))<((2**N)-1) and to_integer(unsigned(rs2))> 0 and memwrite='0') else (others => '0');
-	rout_display <= d_mem(to_integer(unsigned(rs_display))) when (to_integer(unsigned(rs_display))<((2**N)-1) and to_integer(unsigned(rs_display))> 0 and memwrite='0') else (others => '0');
+	rout1 <= br(to_integer(unsigned(rs1))) when (to_integer(unsigned(rs1))> 0) else (others => '0');
+	rout2 <= br(to_integer(unsigned(rs2))) when (to_integer(unsigned(rs2))> 0 ) else (others => '0');
+	rout_display <= br(to_integer(unsigned(rs_display))) when (to_integer(unsigned(rs_display))> 0) else (others => '0');
 	
 	process(clk) begin
 	
 		if rising_edge(clk) then 
 			
-			if to_integer(unsigned(rd))<((2**N)-1) and memwrite='1' then 
+			if memwrite='1' then 
 
-					d_mem(to_integer(unsigned(rd))) <= write_data;
+					br(to_integer(unsigned(rd))) <= write_data;
 					
 			end if;
 			
