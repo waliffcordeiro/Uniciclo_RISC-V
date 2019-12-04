@@ -49,10 +49,10 @@ begin
 					"0011" when ULAop = "1100011" and funct3 = "100" else -- slt para blt
 					"1100" when ULAop = "1100011" and funct3 = "101" else -- sge para bge
 					"0100" when ULAop = "1100011" and funct3 = "110" else -- sltu para bltu
-					"1101" when ULAop = "1100011" and funct3 = "111" else -- sgeu para bgeu
+					"1101" when ULAop = "1100011" and funct3 = "111";		-- sgeu para bgeu
 					
 					
-					-- Jal usa um somador simples
+					-- As demais operacoes usam um somador simples
 					
 	
 end Controle;
